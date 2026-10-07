@@ -1,0 +1,43 @@
+services:
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: jewelkart-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: JewelKart@2026
+      POSTGRES_DB: jewelkart
+    ports:
+      - "5433:5432"
+    volumes:
+      - jewelkart_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    image: jewelkart-backend:1.0
+    container_name: jewelkart-backend-compose
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: postgres
+      DB_HOST: postgres
+      DB_NAME: jewelkart
+      DB_PASSWORD: JewelKart@2026
+      DB_PORT: 5432
+      PORT: 5000
+      JWT_SECRET: JewelKart_SuperSecret_Key_2026_ChangeThis
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    image: jewelkart-frontend:1.0
+    container_name: jewelkart-frontend-compose
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  jewelkart_postgres_data:

@@ -33,15 +33,42 @@ pipeline {
             }
         }
 
+        stage('Tag Docker Images') {
+            steps {
+                echo 'Tagging Docker images for deployment...'
+
+                bat 'docker tag jewelkart-backend:jenkins jewelkart-backend:1.0'
+                bat 'docker tag jewelkart-frontend:jenkins jewelkart-frontend:1.0'
+            }
+        }
+
+        stage('Deploy with Docker Compose') {
+            steps {
+                echo 'Deploying JewelKart using Docker Compose...'
+
+                bat 'docker compose down'
+                bat 'docker compose up -d'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                echo 'Verifying JewelKart deployment...'
+
+                bat 'docker ps'
+
+                bat 'powershell -Command "Invoke-WebRequest http://localhost:5000/api/health -UseBasicParsing"'
+            }
+        }
     }
 
     post {
         success {
-            echo 'JewelKart CI Pipeline completed successfully!'
+            echo 'JewelKart CI/CD Pipeline completed successfully!'
         }
 
         failure {
-            echo 'JewelKart CI Pipeline failed!'
+            echo 'JewelKart CI/CD Pipeline failed!'
         }
     }
 }

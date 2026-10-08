@@ -13,15 +13,36 @@ pipeline {
         stage('Verify Environment') {
             steps {
                 echo 'Checking Jenkins environment...'
+
                 bat 'git --version'
                 bat 'docker --version'
                 bat 'docker compose version'
             }
         }
 
+        stage('SonarQube Code Analysis') {
+            steps {
+                echo 'Running SonarQube code analysis...'
+
+                script {
+                    def scannerHome = tool 'SonarQubeScanner'
+
+                    withSonarQubeEnv('SonarQube') {
+                        bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" " +
+                            "-Dsonar.projectKey=jewelkart " +
+                            "-Dsonar.projectName=JewelKart " +
+                            "-Dsonar.sources=backend/src,frontend/src " +
+                            "-Dsonar.sourceEncoding=UTF-8 " +
+                            "-Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**"
+                    }
+                }
+            }
+        }
+
         stage('Build Backend Docker Image') {
             steps {
                 echo 'Building JewelKart backend Docker image...'
+
                 bat 'docker build -t jewelkart-backend:jenkins ./backend'
             }
         }
@@ -29,6 +50,7 @@ pipeline {
         stage('Build Frontend Docker Image') {
             steps {
                 echo 'Building JewelKart frontend Docker image...'
+
                 bat 'docker build -t jewelkart-frontend:jenkins ./frontend'
             }
         }

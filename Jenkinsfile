@@ -46,8 +46,8 @@ pipeline {
             steps {
                 echo 'Deploying JewelKart using Docker Compose...'
 
-                bat 'docker compose down'
-                bat 'docker compose up -d'
+                bat 'docker compose -p jewelkart down'
+                bat 'docker compose -p jewelkart up -d'
             }
         }
 

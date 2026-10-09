@@ -29,7 +29,7 @@ pipeline {
 
                     withSonarQubeEnv('SonarQube') {
                         bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" " +
-                            "-Dsonar.projectKey=jewelkart " +
+                            "-Dsonar.projectKey=JewelKart "  +
                             "-Dsonar.projectName=JewelKart " +
                             "-Dsonar.sources=backend/src,frontend/src " +
                             "-Dsonar.sourceEncoding=UTF-8 " +

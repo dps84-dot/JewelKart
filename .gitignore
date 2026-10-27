@@ -8,3 +8,5 @@ coverage/
 *.log
 .vscode/
 *.sql
+# Generated security scan reports
+backend/trivy-backend-inventory.json

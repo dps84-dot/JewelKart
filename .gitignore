@@ -10,3 +10,5 @@ coverage/
 *.sql
 # Generated security scan reports
 backend/trivy-backend-inventory.json
+
+neon-connection.txt

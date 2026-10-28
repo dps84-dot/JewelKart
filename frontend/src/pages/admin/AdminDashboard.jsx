@@ -24,7 +24,7 @@ function AdminDashboard() {
                 }
 
                 const response = await axios.get(
-                    "http://localhost:5000/api/admin/dashboard",
+                    "https://jewelkart-backend.onrender.com/api/admin/dashboard",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

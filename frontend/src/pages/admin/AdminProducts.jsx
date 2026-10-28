@@ -45,7 +45,7 @@ function AdminProducts() {
             }
 
             const response = await axios.get(
-                "http://localhost:5000/api/admin/products",
+                "https://jewelkart-backend.onrender.com/api/admin/products",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -221,7 +221,7 @@ function AdminProducts() {
 
                 response = await axios.put(
 
-                    `http://localhost:5000/api/admin/products/${editingProduct.id}`,
+                    `https://jewelkart-backend.onrender.com/api/admin/products/${editingProduct.id}`,
 
                     productData,
 
@@ -238,7 +238,7 @@ function AdminProducts() {
 
                 response = await axios.post(
 
-                    "http://localhost:5000/api/admin/products",
+                    "https://jewelkart-backend.onrender.com/api/admin/products",
 
                     productData,
 
@@ -325,7 +325,7 @@ function AdminProducts() {
 
             const response = await axios.patch(
 
-                `http://localhost:5000/api/admin/products/${product.id}/stock`,
+                `https://jewelkart-backend.onrender.com/api/admin/products/${product.id}/stock`,
 
                 {
                     stock: stockNumber
@@ -383,7 +383,7 @@ function AdminProducts() {
 
             const response = await axios.delete(
 
-                `http://localhost:5000/api/admin/products/${product.id}`,
+                `https://jewelkart-backend.onrender.com/api/admin/products/${product.id}`,
 
                 {
                     headers: {

@@ -34,7 +34,7 @@ function AdminOrders() {
             }
 
             const response = await axios.get(
-                "http://localhost:5000/api/admin/orders",
+                "https://jewelkart-backend.onrender.com/api/admin/orders",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -109,7 +109,7 @@ function AdminOrders() {
             setOrderDetails(null);
 
             const response = await axios.get(
-                `http://localhost:5000/api/admin/orders/${orderId}`,
+                `https://jewelkart-backend.onrender.com/api/admin/orders/${orderId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -169,7 +169,7 @@ function AdminOrders() {
 
             const response = await axios.patch(
 
-                `http://localhost:5000/api/admin/orders/${orderId}/status`,
+                `https://jewelkart-backend.onrender.com/api/admin/orders/${orderId}/status`,
 
                 {
                     status

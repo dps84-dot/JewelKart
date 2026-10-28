@@ -40,7 +40,7 @@ function AdminCustomers() {
 
 
             const response = await axios.get(
-                "http://localhost:5000/api/admin/customers",
+                "https://jewelkart-backend.onrender.com/api/admin/customers",
                 {
                     headers: {
                         Authorization:
@@ -128,7 +128,7 @@ function AdminCustomers() {
 
             const response = await axios.get(
 
-                `http://localhost:5000/api/admin/customers/${customerId}`,
+                `https://jewelkart-backend.onrender.com/api/admin/customers/${customerId}`,
 
                 {
                     headers: {

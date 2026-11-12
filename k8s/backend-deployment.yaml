@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: jewelkart-backend:1.0
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/dps84-dot/jewelkart-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:

@@ -1,5 +1,5 @@
 
-name: JewelKart CI Pipeline
+name: JewelKart CI-CD
 
 on:
   push:
@@ -9,10 +9,15 @@ on:
     branches:
       - develop
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  build:
-    name: Build and Verify JewelKart
+  build-and-push:
+    name: Build and Push Docker Images
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout Source Code
@@ -32,11 +37,30 @@ jobs:
       - name: Build Frontend
         run: npm run build --prefix frontend
 
-      - name: Build Backend Docker Image
-        run: docker build -t jewelkart-backend:ci ./backend
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Frontend Docker Image
-        run: docker build -t jewelkart-frontend:ci ./frontend
+      - name: Build and Push Backend Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ghcr.io/dps84-dot/jewelkart-backend:latest
+            ghcr.io/dps84-dot/jewelkart-backend:${{ github.sha }}
+
+      - name: Build and Push Frontend Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ghcr.io/dps84-dot/jewelkart-frontend:latest
+            ghcr.io/dps84-dot/jewelkart-frontend:${{ github.sha }}
 
       - name: Pipeline Success
-        run: echo "JewelKart CI Pipeline completed successfully!"
+        run: echo "JewelKart Docker images published successfully!"

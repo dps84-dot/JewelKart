@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jewelkart-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: jewelkart-backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP

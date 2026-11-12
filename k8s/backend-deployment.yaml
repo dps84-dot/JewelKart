@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jewelkart-backend
+  labels:
+    app: jewelkart-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jewelkart-backend
+  template:
+    metadata:
+      labels:
+        app: jewelkart-backend
+    spec:
+      containers:
+        - name: backend
+          image: jewelkart-backend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: jewelkart-db-secret
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: jewelkart-db-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: jewelkart-db-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jewelkart-db-secret
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: jewelkart-db-secret
+                  key: DB_PORT

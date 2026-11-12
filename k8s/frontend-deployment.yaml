@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jewelkart-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jewelkart-frontend
+  template:
+    metadata:
+      labels:
+        app: jewelkart-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: jewelkart-frontend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

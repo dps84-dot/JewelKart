@@ -1,0 +1,42 @@
+
+name: JewelKart CI Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build and Verify JewelKart
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Backend Dependencies
+        run: npm ci --prefix backend
+
+      - name: Install Frontend Dependencies
+        run: npm ci --prefix frontend
+
+      - name: Build Frontend
+        run: npm run build --prefix frontend
+
+      - name: Build Backend Docker Image
+        run: docker build -t jewelkart-backend:ci ./backend
+
+      - name: Build Frontend Docker Image
+        run: docker build -t jewelkart-frontend:ci ./frontend
+
+      - name: Pipeline Success
+        run: echo "JewelKart CI Pipeline completed successfully!"
